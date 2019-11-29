@@ -14,7 +14,7 @@ bookmarksRouter.get('/', (req, res) => {
 bookmarksRouter
   .route('/bookmarks')
   .get((req,res) => {
-    res.json(store)
+    res.json(store.bookmarks)
     })
     .post(bodyParser, (req,res)=> {
       const {title, url, description, rating} = req.body
@@ -52,12 +52,12 @@ bookmarksRouter
       description,
       rating
     }
-    bookmarks.push(bookmark)
+    store.bookmarks.push(bookmark)
 
     logger.info(`Bookmark with id ${id} has been created`)
     res 
       .status(201)
-      .location(`http://localhost:${PORT}/bookmarks/${id}`)
+      .location(`http://localhost:8000/bookmarks/${id}`)
       .json(bookmark)
     })
 
@@ -90,7 +90,7 @@ bookmarksRouter
         .status(404)
         .send('Not found');
      }
-     bookmarks.splice(bookmarkIndex, 1)
+     store.bookmarks.splice(bookmarkIndex, 1)
 
      logger.info(`Bookmark with id ${id} has been deleted`)
      res  
